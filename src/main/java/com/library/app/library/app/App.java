@@ -5,6 +5,7 @@ package com.library.app.library.app;
  */
 public class App {
     public static void main(String[] args) {
+    	System.out.print("Welcome to Version 2.0 of the Library");
         System.out.println("Welcome to the Library!");
     }
 }
