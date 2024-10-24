@@ -19,7 +19,7 @@ public class App {
         app.usersMap(); 
         app.booksMap();  
 
-        System.out.println("Version 3.0 of library!");
+        System.out.println("Version 3.0 of The Library!");
         System.out.println("Welcome to the Library!");
 
         app.login(scanner);
