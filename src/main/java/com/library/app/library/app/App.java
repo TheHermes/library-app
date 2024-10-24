@@ -11,7 +11,7 @@ public class App {
     	App app = new App();
  
     	System.out.println("Version 1.0 of library!");
-        System.out.println("Welcome to the Library Amazing!");
+        System.out.println("Welcome to the Library!");
         System.out.println("Books available:");
         
         int i = 1;
