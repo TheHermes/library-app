@@ -1,6 +1,7 @@
 package com.library.app.library.app;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;
 
@@ -12,46 +13,51 @@ import org.junit.jupiter.api.Test;
 public class AppTest {
 	
 	App app = new App();
+	
+	ArrayList<Book> testBooks = new ArrayList<>();
+	
+	@BeforeEach
+	void setUp() {
+		app.usersMap();
+        testBooks = app.booksMap();
+	}
 
     /**
      * Rigorous Test :-)
      */
-    @Test
-    public void booksExist() {
-        //assertNotNull(app.getBooks(), "Tests if method getBooks returns anything");
-    }
     
-    @Test
-    public void dataIsSameSize() {
-    	ArrayList<Book> booksTest = new ArrayList<>();
-    	/*
-    	booksTest.add(new Book("Dune", "Frank Herbert", "978-0593099322"));
-    	booksTest.add(new Book("1984", "George Orwell", " 978-0451524935"));
-    	booksTest.add(new Book("The Great Gatsby", " F. Scott Fitzgerald", "978-0743273565"));
-    	booksTest.add(new Book("Moby Dick", "Herman Melville", "978-1503280786"));
-    	booksTest.add(new Book("To Kill a Mockingbird", "Harper Lee", "978-0061120084"));
-    	booksTest.add(new Book("A Game of Thrones", "George R. R. Martin", "978-0553106626"));*/
-    	
-    	//ArrayList<Book> gotBooks = app.getBooks();
-    	
-    	//assertTrue(gotBooks.size() == booksTest.size());
-    	assertTrue(true);
+	@Test
+    void testBooksMapInitialAvailability() {
+        for (Book book : testBooks) {
+            assertTrue(book.isAvailable(), "Book should initially be available");
+        }
     }
-    
-    @Test
-    public void entryIsIdentical() {
-    	ArrayList<Book> booksTest = new ArrayList<>();
-    	/*
-    	booksTest.add(new Book("Dune", "Frank Herbert", "978-0593099322"));
-    	booksTest.add(new Book("1984", "George Orwell", " 978-0451524935"));
-    	booksTest.add(new Book("The Great Gatsby", " F. Scott Fitzgerald", "978-0743273565"));
-    	booksTest.add(new Book("Moby Dick", "Herman Melville", "978-1503280786"));
-    	booksTest.add(new Book("To Kill a Mockingbird", "Harper Lee", "978-0061120084"));
-    	booksTest.add(new Book("A Game of Thrones", "George R. R. Martin", "978-0553106626"));
-    	
-    	ArrayList<Book> gotBooks = app.getBooks();
-    	
-    	assertTrue(gotBooks.get(1).getTitle() == booksTest.get(1).getTitle());*/
-    	assertTrue(true);
+	
+	@Test
+    void testBorrowBookSuccess() {
+        Book book = testBooks.get(0);
+        User user = new User("victor");
+        app.setCurrentUser(user);
+        
+        assertTrue(book.isAvailable(), "Book should be available before borrowing");
+        
+        app.borrowBook(1);
+        
+        assertFalse(book.isAvailable(), "Book should be unavailable after borrowing");
+        assertTrue(user.getInventory().getBorrowedBooks().contains(book), "Book should be in user's inventory");
     }
+
+	@Test
+    void testReturnBookSuccess() {
+        Book book = testBooks.get(0);
+        User user = new User("victor");
+        app.setCurrentUser(user);
+        app.borrowBook(1);
+        
+        app.returnBook(1);
+        
+        assertTrue(book.isAvailable(), "Book should be available after return");
+        assertFalse(user.getInventory().getBorrowedBooks().contains(book), "Book should be removed from user's inventory");
+    }
+	
 }

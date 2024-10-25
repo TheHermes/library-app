@@ -55,14 +55,14 @@ public class App {
     }
 
 
-    private void usersMap() {
+    public void usersMap() {
         users = new HashMap<>();
         users.put("victor", "password123");
         users.put("hermes", "password123");
         userInventory = new HashMap<>(); 
     }
 
-    private void booksMap() {
+    public ArrayList<Book> booksMap() {
         books = new ArrayList<>();
 
         books.add(new Book("Dune", "Frank Herbert", "978-0593099322", true));
@@ -71,6 +71,8 @@ public class App {
         books.add(new Book("Moby Dick", "Herman Melville", "978-1503280786", true));
         books.add(new Book("To Kill a Mockingbird", "Harper Lee", "978-0061120084", true)); 
         books.add(new Book("A Game of Thrones", "George R. R. Martin", "978-0553106626", true));
+        
+        return books;
     }
 
     public void displayBooks() {
@@ -106,6 +108,25 @@ public class App {
             System.out.println("Invalid book number.");
         }
     }
+    
+    // For testing
+    public void borrowBook(int indexx) {
+ 
+        int bookNumber = indexx;
+
+        if (bookNumber > 0 && bookNumber <= books.size()) {
+            Book selectedBook = books.get(bookNumber - 1);
+
+            if (selectedBook.isAvailable()) {
+                selectedBook.setAvailable(false);
+                currentUser.getInventory().addBook(selectedBook); 
+            } else {
+                System.out.println("Sorry, \"" + selectedBook.getTitle() + "\" is currently unavailable.");
+            }
+        } else {
+            System.out.println("Invalid book number.");
+        }
+    }
 
     public void returnBook(Scanner scanner) {
         System.out.println("You can return the following borrowed books:");
@@ -124,7 +145,25 @@ public class App {
             System.out.println("Invalid book number.");
         }
     }
+    
+    // For testing
+    public void returnBook(int index) {
 
+        int bookNumber = index;
+
+        if (bookNumber > 0 && bookNumber <= currentUser.getInventory().getBorrowedBooks().size()) {
+            Book returnedBook = currentUser.getInventory().getBorrowedBooks().get(bookNumber - 1);
+            returnedBook.setAvailable(true);
+            currentUser.getInventory().removeBook(returnedBook); 
+        } else {
+            System.out.println("Invalid book number.");
+        }
+    }
+
+    // For testing purposes
+    public void setCurrentUser(User user) {
+    	currentUser = user;
+    }
 
     public void displayUserInventory() {
         currentUser.getInventory().displayBorrowedBooks(); 
@@ -162,6 +201,7 @@ public class App {
     private boolean authenticate(String username, String password) {
         return users.containsKey(username) && users.get(username).equals(password);
     }
+    
 }
 
 
