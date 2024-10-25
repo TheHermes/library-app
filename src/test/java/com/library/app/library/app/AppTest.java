@@ -1,8 +1,11 @@
 package com.library.app.library.app;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
@@ -11,8 +14,16 @@ import org.junit.jupiter.api.Test;
  */
 public class AppTest {
 	
+	Map<String, String> testUsers;
+	
 	App app = new App();
-
+	
+	
+	@BeforeEach
+	void setUp() {
+		app.usersMap();
+	}
+	
     /**
      * Rigorous Test :-)
      */
@@ -51,5 +62,14 @@ public class AppTest {
     	ArrayList<Book> gotBooks = app.getBooks();
     	
     	assertTrue(gotBooks.get(1).getTitle() == booksTest.get(1).getTitle(), "Tests if an entry is the same in both data sets");
+    }
+    
+    @Test
+    public void testAuthenticateValid() {
+    	assertTrue(app.authenticate("hermes", "password123"), "Test if authenticate returns true when login is succesfull");
+    }
+    @Test
+    public void testAuthenticateInvalid() {
+    	assertFalse(app.authenticate("kalle", "password1234"), "Test if authenticate returns false when login fails");
     }
 }

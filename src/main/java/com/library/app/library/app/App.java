@@ -35,7 +35,7 @@ public class App {
     }
 
 
-    private void usersMap() {
+    public void usersMap() {
         users = new HashMap<>();
         users.put("victor", "password123");
         users.put("hermes", "password123");
@@ -85,7 +85,7 @@ public class App {
     }
 
     
-    private boolean authenticate(String username, String password) {
+    public boolean authenticate(String username, String password) {
         return users.containsKey(username) && users.get(username).equals(password);
     }
 }
