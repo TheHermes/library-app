@@ -20,8 +20,5 @@ WORKDIR /app
 # Copy the jar file from the build image to the runtime image
 COPY --from=build /app/target/library.app-0.0.1-SNAPSHOT.jar /app/my-app.jar
 
-# Expose the port that the app will run on (if applicable)
-#EXPOSE 8080
-
 # Command to run the jar file
 CMD ["java", "-jar", "/app/my-app.jar"]
