@@ -34,7 +34,7 @@ public class AppTest {
     	
     	ArrayList<Book> gotBooks = app.getBooks();
     	
-    	assertTrue(gotBooks.size() == booksTest.size());
+    	assertTrue(gotBooks.size() == booksTest.size(), "Tests if the size of the two data sets are the same size");
     }
     
     @Test
@@ -50,6 +50,6 @@ public class AppTest {
     	
     	ArrayList<Book> gotBooks = app.getBooks();
     	
-    	assertTrue(gotBooks.get(1).getTitle() == booksTest.get(1).getTitle());
+    	assertTrue(gotBooks.get(1).getTitle() == booksTest.get(1).getTitle(), "Tests if an entry is the same in both data sets");
     }
 }
